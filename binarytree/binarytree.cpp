@@ -4,6 +4,7 @@
 #include <math.h>
 #include <vector>
 #include <bits/stdc++.h>
+
 using namespace std;
 class node
 {
@@ -36,8 +37,8 @@ void preorder(node *root)
         return;
     }
     cout << root->data << " ";
-    inorder(root->left);
-    inorder(root->right);
+    preorder(root->left);
+    preorder(root->right);
 }
 void postorder(node *root)
 {
@@ -417,6 +418,44 @@ node *solve(int inorder[], int preorder[], int n, int start, int end, int &pre)
     root->right = solve(inorder, preorder, n, position + 1, end, pre);
     return root;
 }
+
+/* construct a binary tree from postoder and inorder
+****
+****
+****
+*/
+void createMap1(int inorder[], int n, map<int, int> &nodeto)
+{
+    for (int i = 0; i < n; i++)
+    {
+        nodeto[inorder[i]] = i;
+    }
+}
+node *mapsolve1(int inorder[], int postorder[], int n, int start, int end, int &pre, map<int, int> &nodeto)
+{
+    // base condition
+    if (pre < 0 || start > end)
+    {
+        return NULL;
+    }
+    int index = postorder[pre--];
+    node *root = new node(index);
+    int position = nodeto[index];
+    // right call
+    root->right = mapsolve1(inorder, postorder, n, position + 1, end, pre, nodeto);
+    // left call
+    root->left = mapsolve1(inorder, postorder, n, start, position - 1, pre, nodeto);
+
+    return root;
+}
+
+/*
+minimum time to burn a tree
+/ 1 second to  burn
+****
+****
+*/
+
 //
 int main()
 {
@@ -457,16 +496,24 @@ int main()
     // sumOfLongestBloodline(root,0,maxLength,0,maxSum);
     // cout << "maximum sum in leaf node to root node : " ;
     // cout << maxSum << endl;
-    int n = 6;
-    int inorder[n] = {3, 1, 4, 0, 5, 2};
-    int preorder[n] = {0, 1, 3, 4, 2, 5};
-    int pre = 0;
+    // int n = 6;
+    // int inorder[n] = {3, 1, 4, 0, 5, 2};
+    // int preorder[n] = {0, 1, 3, 4, 2, 5};
+    // int pre = 0;
     // this is using iterative way
     // node *ans = solve(inorder, preorder, n, 0, 5, pre);
     // postorder(ans);
     // this reducing time compleity
-    map<int, int> nodeto;
-    createMap(inorder, n, nodeto);
-    node *ans = mapsolve(inorder, preorder, n, 0, 5, pre, nodeto);
-    postorder(ans);
+    // map<int, int> nodeto;
+    // createMap(inorder, n, nodeto);
+    // node *ans = mapsolve(inorder, preorder, n, 0, 5, pre, nodeto);
+    // postorder(ans);
+    // int n = 8;
+    // int inorder[n] = {4, 8, 2, 5, 1, 6, 3, 7};
+    // int postorder[n] = {8, 4, 5, 2, 6, 7, 3, 1};
+    // int pre = n - 1;
+    // map<int, int> nodeto;
+    // createMap1(inorder, n, nodeto);
+    // node *ans = mapsolve1(inorder, postorder, n, 0, 7, pre, nodeto);
+    // preorder(ans);
 }

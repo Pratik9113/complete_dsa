@@ -6,8 +6,8 @@ int main(){
     
     int n;
     cin >> n;
-    int a[n] ={1,2,3,1,1,1,1};
-    int k =3;
+    int a[n] ={1,2,1,3};
+    int k =2;
     int sum =0;
     int maxo =0;
     int count =0;
@@ -18,7 +18,7 @@ int main(){
             maxo = max(maxo,count);
             sum=0;
             count=0;
-        }
+        }else if()
     }
     cout << "n " <<  maxo;
 }

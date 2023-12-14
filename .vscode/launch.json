@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/91799/Desktop/complete_dsa/queue",
-      "program": "c:/Users/91799/Desktop/complete_dsa/queue/build/Debug/outDebug",
+      "cwd": "c:/Users/91799/Desktop/complete_dsa/binarytree",
+      "program": "c:/Users/91799/Desktop/complete_dsa/binarytree/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
