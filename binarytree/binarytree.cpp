@@ -50,6 +50,17 @@ void postorder(node *root)
     postorder(root->right);
     cout << root->data << " ";
 }
+int maximumheight(node *root)
+{
+    if (root == NULL)
+    {
+        return 0;
+    }
+    int h1 = maximumheight(root->left);
+    int h2 = maximumheight(root->right);
+    int ans = max(h1, h2) + 1;
+    return ans;
+}
 void levelorderbyforloop(node *root)
 {
     if (root == NULL)
@@ -191,17 +202,7 @@ node *buildTree(node *root)
     root->right = buildTree(root->right);
     return root;
 }
-int maximumheight(node *root)
-{
-    if (root == NULL)
-    {
-        return 0;
-    }
-    int h1 = maximumheight(root->left);
-    int h2 = maximumheight(root->right);
-    int ans = max(h1, h2) + 1;
-    return ans;
-}
+
 void levelordertraversalwithheight(node *root)
 {
     queue<node *> q;
@@ -449,6 +450,8 @@ node *mapsolve1(int inorder[], int postorder[], int n, int start, int end, int &
     return root;
 }
 
+/* all the path in vector in binary treee*/
+
 /*
 minimum time to burn a tree
 / 1 second to  burn
@@ -457,10 +460,73 @@ minimum time to burn a tree
 */
 
 //
+/* boundary traversal
+
+
+
+
+*/
+void solveleft(node *root, vector<int> &ans)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+    if (root->left == NULL && root->right == NULL)
+    {
+        return;
+    }
+    ans.push_back(root->data);
+    solveleft(root->left, ans);
+    return;
+}
+
+void solveright(node *root, vector<int> &ans)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+    if (root->left == NULL && root->right == NULL)
+    {
+        return;
+    }
+    solveright(root->right, ans);
+    ans.push_back(root->data); // Move this line after the recursive call
+}
+
+void solveleaf(node *root, vector<int> &ans)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+    if (root->left == NULL && root->right == NULL)
+    {
+        ans.push_back(root->data);
+        return;
+    }
+    solveleaf(root->left, ans);
+    solveleaf(root->right, ans);
+    return;
+}
+
 int main()
 {
     node *root = NULL;
-    // root = buildTree(root);
+    root = buildTree(root);
+
+    /*
+
+    boudary traveral */
+    vector<int> ans;
+    solveleft(root, ans);
+    solveleaf(root, ans);
+    solveright(root, ans);
+    for (int i = 0; i < ans.size(); i++)
+    {
+        cout << ans[i] << " ";
+    }
     /* //levelordertransveral(root);
     //levelorderbyforloop(root);
     //reverseleveltransversal(root);
